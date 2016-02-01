@@ -1,0 +1,48 @@
+This program simulates the game of connect 4, using a default board of 6 rows
+and 7 columns. The player enters the number of players (1 or 2), and then they
+play a game of connect 4. When one player is playing, the computer always
+moves second. The board fills up with Xs and Os as the player enters values.
+To place a disc, the player must press the button for the number corresponding
+to the number aboove a certain column. The turns alternate, and the players
+cannot place discs outside of the board. This will display an error message
+and allow the player to move again.
+
+Internally, the program is made up of two classes, the C4Col class, which
+stores columns, and the C4Board class, which has one row of C4Col elements. It
+uses composition to include object instantiations of the C4Col class within
+the C4Board class. The play function within the C4Board class takes user input 
+and checks whether it is a valid input, and if it is, it places the disc on
+the board array. After every move, the program runs the isGameOver function,
+which checks whether there are 4 of either disc in a row. 
+
+The C4Board class has a function called play, which takes one parameter int,
+which is the number of players. If the parameter is 1, then the computer
+player takes over for player 2. The computer player chooses a random column
+and places a token in that column. While this is not a good algorithm for
+connect 4, it works for a basic computer. To pick a column, the computer 
+chooses a rondom between 1-7, and then checks whether the column is full. If
+the column is not full, then the computer places the disc in that column. 
+
+The program was verified through multiple plays through the game. At first I
+ran into the problem of the entire board filing up and then the program
+continued to ask for user input. I coded a check to make sure the board is not
+full after every turn. If it is full, the program displays a message that the
+board is full and the game ends in a tie. Outside of this bug, I have tested
+every type of win (horizontal, vertical, both diagonals), and each results in
+the game ending with a victory message. Otherwise when a user enters a disc,
+the loop continues to the next iteration, and the game continues.
+
+The get functions are very useful because they allow a program to access a
+variable without being able to edit it. This can prevent accidental data
+manipulation, and also allow the program to better regulate how the data is
+used.
+
+For every standard data type, there is a default deconstructor that runs when
+that variable goes out of scope. For example, an int declared in main will be
+deconstructed when the main program ends. The ints memory is freed and can be
+reused in the future. While a class has a default deconstructor, it does not
+allow the memory to be freed, and this memory cannot be used by anything else
+in the future, even if the class is not using the memory. When building a
+deconstructor, you must use the delete keyword, which essentially frees up the
+unused memory to allow it to be overwritten. This is useful to maximize the
+amout of memory that can be used.

@@ -1,0 +1,54 @@
+This lab computes the Jaccard similarity of two files. It is able to parse
+through two separate files and compute their intersection and their union.
+From there the file computes the similarity, which is the intersection divided
+by the union. This number is used to see if two files are rather similar.
+
+To use the file, the user is prompted for two inputs, which are the names of
+the files that will be parsed through and compared. If the user enters bad
+names, then the program exits with an error message. The program outputs the
+unique words (with the amount of times they occur) in the first file, as well 
+as the number of unique words in this file. It also outputs the Jaccard 
+similarity of the two files, which is the intersection divided by the union.
+The program outputs the words (and the number of unique words) from file1 into 
+the file 'words.txt' and sends the list of weblinks into 'webcrawl.txt'. By 
+doing this, the only things outputted to the screen are the size of union and 
+intersections, and the Jaccard similarity value.
+
+The program does an adequate job of parsing through the two text files, but is
+not able to parse through the html files very well. When the program runs, it
+takes individual words and removes punctuation from them, and then places them
+into a map. If their key is not already in the map, it adds the key and makes
+the value 1. If the key is in the map, it increments the value of this key. It
+also makes sure each word is set to lowercase, so that there are no duplicates
+due to capitalization. Once it has the two maps for the two files, it adds
+all of the keys to two different sets, so that it can compute the union and
+intersection. It then computes these values using set_union and
+set_intersection functions, part of the algorithm library. Once it has these
+sets, it uses the size of them to compute the Jaccard similarity and to
+output this value.
+
+While the program does not work as desired, it is able to compute the
+similarity based on the two sets. The only part of the lab that does not work
+properly is the actual parsing of the html files. I was not able to ignore the
+different tags and such for the html document. I was also not able to
+succesfully get a list of links found in the page with <a href="..."> 
+However, the program does the analysis of the maps correctly and is able to
+properly compute the similarity. 
+
+Update 4/29/2015:
+I did not have time to finish this lab last week, so I decided to get the
+amnesty. I successfully did all of the tasks in lab, and was able to complete
+them in a reasonable amount of time.
+The web crawler actually works. It sets the flag link if it sees '<a'
+somewhere in a word. From here, it starts storing the word until the '>'
+character, at which point it stops storing in the links vector, and begins to
+parse the rese of the word normally, thus storing the links properly, and also
+correcting other errors in the parsing process. The entire program now works
+very effectively. 
+
+Now that I have successfully implemented the webcrawler, the whole program
+effectively calculates the Jaccard Similarity. The only assumptions I made
+were that the html tags were valid, and that the non-html files did not use
+the '<' key anywhere in the file. If a non-html file uses this, then the rest
+of the document is basically ignored (or until there is a '>'). With these
+assumptions, the program works well.

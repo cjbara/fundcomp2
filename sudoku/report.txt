@@ -1,0 +1,65 @@
+The following is the link to my sudoku page on GitHub:
+https://github.com/cjbara/Sudoku
+
+The program is very simple for the user to use. The Puzzle class has three
+public functions: print, isFull, and play. The print function is used to print
+out the board with special formatting. The isFull function returns 0 or 1 when
+the sudoku is not solved or solved, respectively. The play function takes
+input i, d, r, and q, which inserts, deletes, resets the board, and quits the
+program, respectively. The insert command checks an inputed row and column and
+then checks the inserted number against the board. If it is able to be placed
+in that spot, then it is placed there. The delete command is only allowed to
+delete elements on the board that were not part of the initial puzzle. Reset
+makes the board equal to the original puzzle.
+
+The driver function prints out a=n int puzzle, then a char puzzle, and then
+plays the game with the int puzzle. 
+
+From a programmer's perspective, the class Puzzle has two member variables:
+both are vectors of vectors (templated to typename T). One is the board and is
+updated as people enter new values into the board, and the other is the
+initial board, which is set once in the constructor, and then never updated.
+However, it is checked when people want to overwrite a element in the board
+or delete a element from the board. To get the values, it reads the numbers or
+characters in from an input file, and then stores them in the vector of
+vectors. For each line, it reads in the values into a vector and then pushes
+this tempVec to the back of the main vector. This creates what we can
+visualize as a a 2D vector of vectors. 
+
+The member function insert is where most
+of the algorithms are implemented. To check if a number can be inserted into
+(row,column), it must check all cases in which it would not be able to insert
+it. It follows this procedure (all tasks are split into functions):
+	1) check if (row,col) is already filled.
+	2) check if the row already has the element in it
+	3) check if the column already has the numebr in it
+	4) check if the mini box already has the number in it
+If any of the above is true, then the function returns a specific value and
+prints an error message to the console. If none of the above exits the 
+function, then the element is placed in the desired row, col.
+All of the algorithms are separated into their own functions, and are simple
+to implement. For the row and column, the program loops through each element
+in the row/column, and checks if the desired element is already in the
+row/column. If it is, a flag variable 'check' is changed to 1. At the end of
+the loop, check is returned. If the functions return 1, the number cannot be
+placed, otherwise, the number can be placed according to that category.
+The minibox algorithm is implemented by finding the top left index for the
+mini box. These are stored into the variables x and y (row-row3%3 gets the top
+row of the mini box, same with col). From here, there is a double for loop,
+incrementing each variable two times, and therefore it checks every vaue of
+the mini box. If the desired element is found, a flag variable check is set to
+1. At the end of the function, check is returned. 
+If none of these returns a value of 1, then the number is placed. Otherwise,
+it displays the proper error message and does not place the number.
+
+The program was verified by testing input values that both work and don't
+work. I checked one or two of every error. For example, I inputed numbers that
+were already in a row, and then numbers that were already in a column. Every
+time it threw the proper error and did not place. However, when a vaid number
+was placed, the program placed it on the board just fine. The hardest thing to
+check was the mini box, but I feel like my top left algorithm is the best way
+of looping through the entire mini box. It also works well through a similar
+verification (I checked a case where the row and column were good, but the
+eement was already in the mini box: row 7, column 2, number 8 on puzzle.txt).
+
+

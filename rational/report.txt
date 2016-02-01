@@ -1,0 +1,56 @@
+The second part of this project created a new class Rational, which stored
+rational numbers and was able to manipulate them through member functions. The
+user is able to output the rational in its fraction form, as well as add,
+subtract, multiply, and divide two rationals. Lastly, the class game the
+ability to raise a rational to a power. 
+
+The mainRational program is an example of how the rational class can be used.
+It gives the user the option to enter two rationals by entering their
+numerator and denominator (I could have overloaded the >> operator to enter in
+a/b form). The program then adds these two rationals together, subtracts the
+second from the first, multiplies them together, and divides the first by the
+second. Lastly, the exponent feature is used by having the user enter an
+exponent, and both rationals are raised to that exponent.
+
+From an internal standpoint, the class has two private data members, numerator
+and denominator. These two are always stored in their most simplified form
+using the private member functions getgcd and simplify. These two functions
+are called inside the Default constructor, ensuring a rational must be
+simplified at the time of creation. The simplify function gets the greatest
+common denominator by calling getgcd, and then divides the numerator and
+denominator each by that int. The constructor also makes sure the denominator
+is not set to 1. If it is, it displays an error message and sets the
+denominator to 1.
+There are two functions getN and getD, which simply return the numerator and 
+denominator respectively of the class.
+
+The overloaded operator << takes the rational and prints it out in the form 
+n/d. It is declared as a friend function so it can access the private
+variables of the class. If the denominator is 1, the output only displays the
+numerator. 
+
+The overloaded operators + and - are very similar, in the sense that they both
+find a common denominator by multiplying their denominators together. Then
+they multiply the numerators by the opposide denominator and add them together
+(or subtract them) and store this as a new variable newN. A new Rational is
+then created called R3, and it is given numerator newN and denominator
+commonD. The constructor automatically simplifies the expression and returns
+the value. 
+The overloaded * and / operators are also similar. Multiply multiplies the
+numerators together and then the denominators together, and creates a new
+Rational R3 using these commonN and commonD values. Divide multiplies the
+first numerator with the second denominator and stores it as newN. Then it
+multiplies the second numerator with the first denominator, and stores it as
+newD. These values again make a new Rational R3 and return it. 
+The overloaded exponent operator takes one Rational and the power, and
+multiplies itself together (both numerator and denominator) power times. The
+new values for n and d then are used to create a new rational.
+
+The outputs have been verified by many uses of the interactive game. At first,
+the / operator tried to divide by 0 if the numerator for the second rational
+is 0. I fixed that bug and now it changes the numerator to 1 instead, then
+continues the divide function. Another fix I had to make was the exponent. At
+first, I was multiplying n by n every loop, which would result in a value far
+greater than the actual exponential expression. I changed tat and the number
+of times the loop ran in order to get an accurate exponent. Regardless of the
+values entered for the two rationals, all of the functions work properly.

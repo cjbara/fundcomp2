@@ -1,0 +1,97 @@
+In this lab, I created two major programs, monkeysort and blackjack. There 
+is only one makefile that compiles every part of this lab. The monkeysort 
+shuffles the deck and checks if it is in order, and then displays the number 
+of times it shuffled to get it in order. Below are the values for a 
+7, 8, and 9 card deck.
+
+For the monkeysort program, these are the outputs for the sort times:
+ With a 7 card deck:
+  It took 2453 shuffles to sort the deck.
+  It took 10324 shuffles to sort the deck.
+  It took 6737 shuffles to sort the deck.
+
+ With an 8 card deck:
+  It took 10011 shuffles to sort the deck.
+  It took 79423 shuffles to sort the deck.
+  It took 31989 shuffles to sort the deck.
+
+ With a 9 card deck:
+  It took 787151 shuffles to sort the deck.
+  It took 601627 shuffles to sort the deck.
+  It took 1241610 shuffles to sort the deck.
+
+The blackjack program is designed for one user and a dealer, and has some
+simplified rules from the actual game of blackjack. These simplifications
+include:
+	-Aces are always 11
+	-Only options are hit and stand
+	-No betting
+	-Dealer stands on 17
+	-Tie counts as a win for the dealer
+With these simplifications in mind, the game turned otu well.
+
+From a user's perspective, the program displays the user's card and the
+dealer's first card (the up card). From there, it asks the user to hit or
+stand. The user then enters a letter (either h or s, any other key will do
+nothing). If the user hits, they are given another card, and the program
+displays their hand value. If they bust, the dealer wins and it goes to the
+end of hand display. However, if the player stands before he goes over 21,
+then the dealer flips his other card and hits until his hand totals to at
+least 17. If the dealer busts, then the player wins. If neither busts, then
+the values of each hand is shown and the winner is the higher hand (or the
+dealer in case of a tie). After the winner is declared, the hand ends, and the
+program displays the current score: how many wins for the dealer and the user.
+It then gives the user the option to play again. The score gets updated every 
+time a new hand is played.
+
+From a programmer's perspective, the BlackJack object has many private 
+data members. These data members include playerWins and dealerWins, which are
+initialized to 0 and incremented each time a hand ends, based upon who won the
+hand. The two deques playerHand and dealerHand are initialized to have nothing
+in them, but are then filled as the cards are dealt from the CardDeck deck,
+which is a composition. The BlackJack class has a CardDeck inside of it, which
+can deal cards to the players and then shuffle. This deck deals until it gets
+below 15 total cards, and then it calls the newDeck function from inside the
+Deal function, all of which occurs inside of the CardDeck class. By doing
+this, it is easy to keep the two classes separated, essentially not mixing the
+deck with the game of blackjack, except when dealing cards.
+
+The newDeck function in CardDeck runs by clearing the deque deck, then filling
+it with new cards from 0 to deckSize-1, and then shuffling the deck. This is
+a private member function of CardDeck, and therefore can only be accessed from
+within the class (such as the Deal function). 
+
+The sum function within the BlackJack class takes an input of a deque of ints,
+and outputs the blackjack score associated with the given cards. To do this,
+it loops through the hand, and for each value, it modulos it with 13, and then
+treats 0s as kings, 1s as aces, 11s as jacks, and 12s as queens. Numbers 2-10
+are added normally to the sum, but aces are always 11 and kings, queens, and
+jacks are always 10, and are added to the handSum variable, which is then
+returned after the total sum is calculated. 
+
+The basic structure of the playBlackJack function is as follows:
+-enters the playing while loop
+-enters the single hand while loop
+-deals 2 to the player and 1 to the dealer
+-if the user gets blackjack, the user wins, and it breaks the loop and
+ increments playerWins
+-displays the player's score and the dealer's score (for his only card)
+-asks the user to hit or stand
+-if hit, deals another card and sees if the user busts
+-if they bust, they lose
+-if they didn't bust, ask again to hit or stand
+-once they stand, the dealer is dealt another card, and keeps hitting until he
+ gets to at least 17
+-if the dealer busts, the user wins
+-if he doesn't, then the scores are compared and a winner is determined
+-the game stats are shown, and thes user is asked to play again
+
+The program was tested for errors by multiple playthroughs. Initially, I used
+the modulo 12 instead of modulo 13, so there were more face cards in the deck,
+and it was difficult to predict. Once I figured this out, I changed it and the
+game seems more fair now. The only problem with the game lies in the
+simplification that aces can only be 11. With this simplification, it is
+possible for a player to get 22 with 2 cards, which is an automatic bust.
+Outside of this flaw, the game runs very smoothly. After playing the game many
+times, I have determined that the user inputs all work well, and the random
+values work as well to create a very functional game of blackjack.

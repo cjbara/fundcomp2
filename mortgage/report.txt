@@ -1,0 +1,27 @@
+This prelab had us design a class called Mortgage in order to calculate the
+mortgage payments. The user is able to create a new Mortgage by using either
+the defaut or nondefault constructor. The nondefault constructor takes three
+inputs: principal, yearly interest rate, and monthly payment. The interest
+rate must be given as a decimal. From here the user can use the tree
+functions: getPrincipal(), credit(double), and amortize(). The getPrincipal
+returns the remaining money on the mortgage. Credit deducts a specified amount
+of money from the principal. Amortize displays a table of the payment
+schedule, with the interest added and the monthly payment subtracted from the
+principal. 
+
+Internally, the class has three privae variables: principal, rate, and
+payment. These three variables are given the either the user entered values or
+the default values ($100,000 principal, 5% rate, and $500 monthly payment).
+If the user's values are valid, then they are stored in the variables.
+The credit function takes one input and subtracts it from the principal. If
+the credit is greater than the principal, the principal goes to zero. The
+amortize function takes no inputs, and prints out lines of a chart until the
+balance remaining is zero. It displays months, monthly payment, interest on
+the balance that month, and the remaining balance. It stops displaying when
+the balance is zero. 
+
+The program was verified by creating the driver program main.cpp, which
+creates four classes to demonstrate the error checking, default, and
+nondefault constructors. It also uses the methods inside of Mortgage, and
+shows an example of each. I tried this with many different mortgage inputs and
+they all seemed to work very well.

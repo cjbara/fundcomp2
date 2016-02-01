@@ -1,0 +1,40 @@
+This week's lab added to the Puzzle class, giving it the ability to solve many
+puzzles. In order to use this class, the user calls the constructor with an
+input of a string, which is the name of the data file to be loaded into the
+board. The user then can call the solve() member function in order to solve
+the puzzle and display the solved puzzle. Also, they can call the print()
+function before solving in order to display the initial puzzle. The other
+option is the play() function, which is the same as last lab's function. It
+allows the user to manually try and enter the values to solve the puzzle. 
+
+Internally, the sudoku solver is rather complex. It starts by updating a 3D 
+vector of possible values for each row and column. It loops through each row
+and column, and then loops through the numbers 1-9 and determines which
+numbers can possibly go into the board at this row and column. To do this, it
+uses the check function, which was coded last week. If any of the rows/columns
+only have 1 possible value, the solver plugs that value into the board vector.
+This process loops until either the board is full or until one pass through
+the loop does not make any changes to the board. After this, the solve
+function calls Singleton Box, which is a function that loops through each mini
+box. Within each box, if a number can only go in one place in the box, then
+that place must be correct place on the board for the specific number. This is how all three of the Singleton functions work, only for rows and columns. They check how many places a certain number can be placed within a column, row, or box, and if they can only be placed in one slot, they are placed into that slot. This is done by having another 2D vector called piccolos, which contains 10 other vectors. For example, in the singletonCol The function loops through all possible values for a cell, and if the number isn’t already filled in on the board, it stores the rows in which the particular number can go. This number is pushed to the back of the array possRows[i], where i is the number that is being evaluated. After storing all the numbers, the program checks if there are any numbers with possRows[i].size()==1, meaning the number can only go into one row of the particular column. If it finds a number with this quality, it inserts it into the board, then resets the passRows vector, and enters the next column in the loop. The singletonBox uses the same type of logic, but instead has both a possRows and a possCols vector. These store the row and column respectively of a particular number. Again, if the size of one of the dimensions is 1, we know that that number must belong in that particular (row,col) cell. If any of the singleton functions updates the board (i.e. there are less empty spaces on the board), then the program does not go through the rest of the singleton functions, but rather reevaluates which numbers can be placed into the possible vector. To do this, the loop resets and the possible vector’s third dimension is cleared. After this, the program adds the values that can be put in each cell, which was the first step.
+
+The program was verified by using the solve function to solve different
+puzzles. While I was testing it, I ran into a few major bugs. I found these
+bugs by printing specific variables to the screen to check if they had the
+proper value. The two biggest problems I encountered were:
+1) Inside the singleton functions, even though I looped through each
+row/column/box, I forgot to clear the possCols vectors, which made the program
+input many of the same values into the puzzle, even though they did not belong
+there. Once I added a for loop to clear each of the values, the Singleton
+functions started working properly. 
+2) If one of the Singleton functions worked and actually updated the board, I
+did not initially realize that the next Singleton function would then use the
+same possible values. For this reason, I had to check whether each of the 
+Singleton functions updated the value of board at all, and if it did, continue
+the loop. 
+After finding these two bugs, the solver was able to solve many difficult 
+puzzles. 
+
+My solver is able to solve the coder challenge puzzles, as well as the easy
+and medium puzzles. Please test these puzzles as well as the standard puzzles.

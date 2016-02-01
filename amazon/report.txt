@@ -1,0 +1,82 @@
+This lab created two things: a BankAccount heirarchy with checking and savings
+accounts, as well as a package heirarchy with two different shipping pricing
+options. I, Cory Jbara, worked alone on this lab. This report is covering the
+Package heirarchy.
+
+This lab featured a class heirarchy to help Amazon calculate their shipping
+cost with three different types of packages: one with a rate for shipping per
+ounce, one with an express shipping option that charges an extra fee along
+with its base shipping cost per ounce, and one with an overnight option that 
+has an extra fee per ounce along with the base fee per ounce. All packages had
+a few things in common. They all had:
+	-First and last name
+	-Address
+	-Zip code
+	-weight
+	-base cost per ounce
+Because of these similarities, it made sense to create a base class called
+package, which had all of these properties. To access the properties, a user
+had to call the get functions for each of the variables (function names located 
+in the Package.h file). The weight and costPerOz also have set functions,
+which take positive values for these quantities. To calculate the cost, the
+user calls calcCost() from any instantiated object of class Package, TwoDay,
+or Overnight, because these functions exist in all three of the classes
+(though they calculate slightly different quantities). 
+
+Internally, there are two derived classes, Overnight and TwoDay, which are
+essentially the same as the base class Package, but with slight modifications.
+TwoDay has a flat rate of shipping on top of the price per ounce, which is
+represented by the variable extraFee, a private variable in the TwoDay class.
+The calcCost() function overrides the Package function, but also makes a call
+to the Package::calcCost() function from within the override. It essentially
+takes the base class calculation and adds the extraFee to obtain the total
+price. The Overnight class had a similar override, again using the
+Package::calcCost() function, but this time adding the extraCostPerOunce
+multiplied by the weight. The variable weight was a private data member in 
+Package, so to get that value I used the package member function getWeight().
+The function then returned the value of the total cost. With function
+override, each class had a calcCost() function, but each did a slightly
+different task. To introduce polymorphism, the calcCost() function was
+declared virtual.
+
+At first, the classes worked fine, but I did not declare the calcCost()
+function to be virtual. When the base class pointers pointed at the derived
+class objects, they called the base class version of the calcCost() function,
+which did not include the extra fees for overnight or two day shipping.
+However, once the function was declared virtual in Package.h, it became a
+virtual function, and therefore pointers called the derived class versions of
+calcCost(). The outputs of the virtual print functions work well, because they
+display all of the values of the classes. The override works well because
+TwoDay and Overnight each has a different version of print from Package, each
+of which calculates the total cost correctly (as seen through multiple
+iterations and examples in the driver program, each has a different value
+depending on the type of package) and outputs it to the screen.
+
+In my opinion, using inheritance is much more natural than composition.
+Composition is extremely tedious, expeically when accessing the member
+functions outside of the class definition. Because the object variable is
+usually declared as private, there is no way to efficiently access the "base
+class" member functions outside of the class. To do it, you generally have to 
+recreate the function. The use of inheritance is extremely nice, because it is
+tremendously easy to access the member functions of the base class. Also,
+inheritance paves the way for such structures as polymorphism, an extremeply
+useful tool in object oriented programming. Also, inheritance saves time by
+being able to define a class and reuse it later in different projects.
+
+The difference between an abstract class and a concrete class is that
+abstract classes can never be instantiated, while concrete classes are able to
+be instantiated. Abstract classes are useful in situyations where
+instantiation would seem odd, but you still want many derived classes to have
+the same variables. For example, a Shape class should never be instantiated,
+because a generic shape should not be drawn. However, many shapes have similar
+properties that can be inherited, such as edges and size. These properties can
+be inherited through an abstract class Shapes. In order to implement an
+abstract class, you have to declare at least one pure virtual function, which
+is not implemented in any abstract classes. In order to make a concrete
+derived class, all you have to do is to implement all of the pure virtual
+functions in a particular derived class. To create a pure virtual function, in
+the header file you type:
+	virtual void function()=0;
+This creates a pure virtual function in the base class. This makes the base
+class an abstract class. When a derived class implements this pure virtual
+function, it becomes a concrete class. 
